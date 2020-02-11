@@ -12,6 +12,11 @@ As well as providing a bill for the performance, the company gives its customers
 <h1>Statement for BigCo</h1>
   <table>
     <tr>
+      <th>play</th>
+      <th>seats</th>
+      <th>cost</th>
+    </tr>
+    <tr>
       <td>As You Like It</td>
       <td>$330.00</td>
       <td>10</td>
