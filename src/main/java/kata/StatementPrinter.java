@@ -20,7 +20,7 @@ public class StatementPrinter {
         NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
         for (var perf : invoice.performances) {
-            var play = this.plays.get(perf.playID);
+            var play = playFor(perf);
             int thisAmount = amountFor(perf, play);
 
             // add volume credits
@@ -35,6 +35,10 @@ public class StatementPrinter {
         result += String.format("Amount owed is %s\n", frmt.format(totalAmount / 100));
         result += String.format("You earned %s credits\n", volumeCredits);
         return result;
+    }
+
+    private Play playFor(Performance perf) {
+        return this.plays.get(perf.playID);
     }
 
     private static int amountFor(Performance aPerformance, Play play) {
