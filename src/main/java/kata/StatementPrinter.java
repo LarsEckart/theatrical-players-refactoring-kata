@@ -13,10 +13,15 @@ public class StatementPrinter {
     }
 
     public String print(Invoice invoice) {
-        return renderPlainText(invoice);
+        StatementData statementData = new StatementData();
+        return renderPlainText(statementData, invoice);
     }
 
-    private String renderPlainText(Invoice invoice) {
+    record StatementData() {
+
+    }
+
+    private String renderPlainText(StatementData statementData, Invoice invoice) {
         var result = String.format("Statement for %s\n", invoice.customer);
 
         for (var perf : invoice.performances) {
