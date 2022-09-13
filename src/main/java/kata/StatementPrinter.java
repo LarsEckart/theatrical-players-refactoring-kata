@@ -29,6 +29,21 @@ public class StatementPrinter {
 
     record StatementData(String customer, List<MyPerformance> performances) {
 
+        public int totalAmount() {
+            var result = 0;
+            for (var perf : this.performances()) {
+                result += perf.amount();
+            }
+            return result;
+        }
+
+        public int totalVolumeCredits() {
+            var volumeCredits = 0;
+            for (var perf : this.performances()) {
+                volumeCredits = volumeCredits + perf.volumeCredits();
+            }
+            return volumeCredits;
+        }
     }
 
     private String renderPlainText(StatementData data) {
@@ -37,25 +52,9 @@ public class StatementPrinter {
         for (var perf : data.performances()) {
             result += String.format("  %s: %s (%s seats)\n", perf.play().name, usd(perf.amount()), perf.audience());
         }
-        result += String.format("Amount owed is %s\n", usd(totalAmount(data)));
-        result += String.format("You earned %s credits\n", totalVolumeCredits(data));
+        result += String.format("Amount owed is %s\n", usd(data.totalAmount()));
+        result += String.format("You earned %s credits\n", data.totalVolumeCredits());
         return result;
-    }
-
-    private int totalAmount(StatementData data) {
-        var result = 0;
-        for (var perf : data.performances()) {
-            result += perf.amount();
-        }
-        return result;
-    }
-
-    private int totalVolumeCredits(StatementData data) {
-        var volumeCredits = 0;
-        for (var perf : data.performances()) {
-            volumeCredits = volumeCredits + perf.volumeCredits();
-        }
-        return volumeCredits;
     }
 
     private String usd(int number) {
