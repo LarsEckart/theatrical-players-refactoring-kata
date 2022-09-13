@@ -13,6 +13,10 @@ public class StatementPrinter {
     }
 
     public String print(Invoice invoice) {
+        return renderPlainText(invoice);
+    }
+
+    private String renderPlainText(Invoice invoice) {
         var result = String.format("Statement for %s\n", invoice.customer);
 
         for (var perf : invoice.performances) {
