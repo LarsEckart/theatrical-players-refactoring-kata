@@ -25,7 +25,7 @@ public class StatementPrinter {
     private String renderPlainText(StatementData data, Invoice invoice) {
         var result = String.format("Statement for %s\n", data.customer());
 
-        for (var perf : invoice.performances) {
+        for (var perf : data.performances()) {
             result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf)), perf.audience);
         }
         result += String.format("Amount owed is %s\n", usd(totalAmount(invoice)));
