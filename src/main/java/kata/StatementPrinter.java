@@ -30,19 +30,11 @@ public class StatementPrinter {
     record StatementData(String customer, List<MyPerformance> performances) {
 
         public int totalAmount() {
-            var result = 0;
-            for (var perf : this.performances()) {
-                result += perf.amount();
-            }
-            return result;
+            return this.performances().stream().mapToInt(MyPerformance::amount).sum();
         }
 
         public int totalVolumeCredits() {
-            var volumeCredits = 0;
-            for (var perf : this.performances()) {
-                volumeCredits = volumeCredits + perf.volumeCredits();
-            }
-            return volumeCredits;
+            return this.performances().stream().mapToInt(MyPerformance::volumeCredits).sum();
         }
     }
 
