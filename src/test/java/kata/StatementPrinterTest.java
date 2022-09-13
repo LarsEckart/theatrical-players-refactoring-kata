@@ -24,6 +24,7 @@ class StatementPrinterTest {
                 new Performance("hamlet", 55),
                 new Performance("hamlet", 15),
                 new Performance("as-like", 35),
+                new Performance("as-like", 12),
                 new Performance("othello", 40));
         var plays = Map.of(
                 "hamlet", new Play("Hamlet", "tragedy"),
