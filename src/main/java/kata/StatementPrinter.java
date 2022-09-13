@@ -24,11 +24,11 @@ public class StatementPrinter {
     }
 
     private int totalAmount(Invoice invoice) {
-        var totalAmount = 0;
+        var result = 0;
         for (var perf : invoice.performances) {
-            totalAmount += amountFor(perf);
+            result += amountFor(perf);
         }
-        return totalAmount;
+        return result;
     }
 
     private int totalVolumeCredits(Invoice invoice) {
