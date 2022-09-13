@@ -14,9 +14,8 @@ public class StatementPrinter {
     }
 
     public String print(Invoice invoice) {
-        StatementData statementData = new StatementData(invoice.customer, invoice.performances.stream().map(this::enrichPerformance).toList());
 
-        return renderPlainText(statementData);
+        return renderPlainText(new StatementData(invoice.customer, invoice.performances.stream().map(this::enrichPerformance).toList()));
     }
 
     private MyPerformance enrichPerformance(Performance performance) {
