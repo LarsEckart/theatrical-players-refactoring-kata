@@ -13,16 +13,23 @@ public class StatementPrinter {
     }
 
     public String print(Invoice invoice) {
-        var totalAmount = 0;
         var result = String.format("Statement for %s\n", invoice.customer);
 
+        int totalAmount = totalAmount(invoice);
         for (var perf : invoice.performances) {
             result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf)), perf.audience);
-            totalAmount += amountFor(perf);
         }
         result += String.format("Amount owed is %s\n", usd(totalAmount));
         result += String.format("You earned %s credits\n", totalVolumeCredits(invoice));
         return result;
+    }
+
+    private int totalAmount(Invoice invoice) {
+        var totalAmount = 0;
+        for (var perf : invoice.performances) {
+            totalAmount += amountFor(perf);
+        }
+        return totalAmount;
     }
 
     private int totalVolumeCredits(Invoice invoice) {
