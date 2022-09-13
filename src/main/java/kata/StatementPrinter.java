@@ -1,6 +1,7 @@
 package kata;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -13,11 +14,11 @@ public class StatementPrinter {
     }
 
     public String print(Invoice invoice) {
-        StatementData statementData = new StatementData(invoice.customer);
+        StatementData statementData = new StatementData(invoice.customer, invoice.performances);
         return renderPlainText(statementData, invoice);
     }
 
-    record StatementData(String customer) {
+    record StatementData(String customer, List<Performance> performances) {
 
     }
 
