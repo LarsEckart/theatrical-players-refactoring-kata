@@ -39,6 +39,6 @@ class StatementPrinterTest {
 
         String statement = new StatementPrinter().print(invoice, plays);
 
-        Approvals.verify(statement, new Options(new AutoApproveReporter()));
+        Approvals.verify(statement, new Options(new Junit5Reporter()));
     }
 }
