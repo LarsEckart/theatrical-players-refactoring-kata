@@ -16,10 +16,7 @@ public class StatementPrinter {
         var totalAmount = 0;
         var result = String.format("Statement for %s\n", invoice.customer);
 
-        var volumeCredits = 0;
-        for (var perf : invoice.performances) {
-            volumeCredits = volumeCredits + volumeCreditsFor(perf);
-        }
+        int volumeCredits = totalVolumeCredits(invoice);
 
         for (var perf : invoice.performances) {
             // print line for this order
@@ -29,6 +26,14 @@ public class StatementPrinter {
         result += String.format("Amount owed is %s\n", usd(totalAmount));
         result += String.format("You earned %s credits\n", volumeCredits);
         return result;
+    }
+
+    private int totalVolumeCredits(Invoice invoice) {
+        var volumeCredits = 0;
+        for (var perf : invoice.performances) {
+            volumeCredits = volumeCredits + volumeCreditsFor(perf);
+        }
+        return volumeCredits;
     }
 
     private String usd(int number) {
