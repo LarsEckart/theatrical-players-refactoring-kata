@@ -22,6 +22,7 @@ class StatementPrinterTest {
     void golden_master() {
         var performances = List.of(
                 new Performance("hamlet", 55),
+                new Performance("hamlet", 15),
                 new Performance("as-like", 35),
                 new Performance("othello", 40));
         var plays = Map.of(
