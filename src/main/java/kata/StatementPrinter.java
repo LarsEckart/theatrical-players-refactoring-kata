@@ -15,35 +15,35 @@ public class StatementPrinter {
 
     public String print(Invoice invoice) {
         StatementData statementData = new StatementData(invoice.customer, invoice.performances);
-        return renderPlainText(statementData, invoice);
+        return renderPlainText(statementData);
     }
 
     record StatementData(String customer, List<Performance> performances) {
 
     }
 
-    private String renderPlainText(StatementData data, Invoice invoice) {
+    private String renderPlainText(StatementData data) {
         var result = String.format("Statement for %s\n", data.customer());
 
         for (var perf : data.performances()) {
             result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf)), perf.audience);
         }
-        result += String.format("Amount owed is %s\n", usd(totalAmount(invoice)));
-        result += String.format("You earned %s credits\n", totalVolumeCredits(invoice));
+        result += String.format("Amount owed is %s\n", usd(totalAmount(data)));
+        result += String.format("You earned %s credits\n", totalVolumeCredits(data));
         return result;
     }
 
-    private int totalAmount(Invoice invoice) {
+    private int totalAmount(StatementData data) {
         var result = 0;
-        for (var perf : invoice.performances) {
+        for (var perf : data.performances()) {
             result += amountFor(perf);
         }
         return result;
     }
 
-    private int totalVolumeCredits(Invoice invoice) {
+    private int totalVolumeCredits(StatementData data) {
         var volumeCredits = 0;
-        for (var perf : invoice.performances) {
+        for (var perf : data.performances()) {
             volumeCredits = volumeCredits + volumeCreditsFor(perf);
         }
         return volumeCredits;
