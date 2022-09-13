@@ -22,17 +22,17 @@ public class StatementPrinter {
             volumeCredits = volumeCredits + volumeCreditsFor(perf);
 
             // print line for this order
-            result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf) / 100), perf.audience);
+            result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf)), perf.audience);
             totalAmount += amountFor(perf);
         }
-        result += String.format("Amount owed is %s\n", usd(totalAmount / 100));
+        result += String.format("Amount owed is %s\n", usd(totalAmount));
         result += String.format("You earned %s credits\n", volumeCredits);
         return result;
     }
 
-    private String usd(Number number) {
+    private String usd(int number) {
         NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
-        return frmt.format(number);
+        return frmt.format(number / 100);
     }
 
     private int volumeCreditsFor(Performance aPerformance) {
