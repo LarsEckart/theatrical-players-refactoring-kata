@@ -7,9 +7,9 @@ class App {
 
     public static void main(String[] args) {
         List<Performance> performances = List.of(
-                new Performance("hamlet", 10),
-                new Performance("as-like", 15),
-                new Performance("othello", 20));
+                new Performance("hamlet", 55),
+                new Performance("as-like", 35),
+                new Performance("othello", 40));
 
         Map<String, Play> plays = Map.of(
                 "hamlet", new Play("Hamlet", "tragedy"),
