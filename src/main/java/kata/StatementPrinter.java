@@ -14,11 +14,20 @@ public class StatementPrinter {
     }
 
     public String print(Invoice invoice) {
-        StatementData statementData = new StatementData(invoice.customer, invoice.performances);
+        StatementData statementData = new StatementData(invoice.customer, invoice.performances.stream().map(this::enrichPerformance).toList());
+
         return renderPlainText(statementData);
     }
 
-    record StatementData(String customer, List<Performance> performances) {
+    private MyPerformance enrichPerformance(Performance performance) {
+        return new MyPerformance(
+                playFor(performance),
+                performance.audience,
+                amountFor(performance),
+                volumeCreditsFor(performance));
+    }
+
+    record StatementData(String customer, List<MyPerformance> performances) {
 
     }
 
@@ -26,7 +35,7 @@ public class StatementPrinter {
         var result = String.format("Statement for %s\n", data.customer());
 
         for (var perf : data.performances()) {
-            result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf)), perf.audience);
+            result += String.format("  %s: %s (%s seats)\n", perf.play().name, usd(perf.amount()), perf.audience());
         }
         result += String.format("Amount owed is %s\n", usd(totalAmount(data)));
         result += String.format("You earned %s credits\n", totalVolumeCredits(data));
@@ -36,7 +45,7 @@ public class StatementPrinter {
     private int totalAmount(StatementData data) {
         var result = 0;
         for (var perf : data.performances()) {
-            result += amountFor(perf);
+            result += perf.amount();
         }
         return result;
     }
@@ -44,7 +53,7 @@ public class StatementPrinter {
     private int totalVolumeCredits(StatementData data) {
         var volumeCredits = 0;
         for (var perf : data.performances()) {
-            volumeCredits = volumeCredits + volumeCreditsFor(perf);
+            volumeCredits = volumeCredits + perf.volumeCredits();
         }
         return volumeCredits;
     }
