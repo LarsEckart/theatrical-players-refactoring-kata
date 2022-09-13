@@ -13,16 +13,16 @@ public class StatementPrinter {
     }
 
     public String print(Invoice invoice) {
-        StatementData statementData = new StatementData();
+        StatementData statementData = new StatementData(invoice.customer);
         return renderPlainText(statementData, invoice);
     }
 
-    record StatementData() {
+    record StatementData(String customer) {
 
     }
 
-    private String renderPlainText(StatementData statementData, Invoice invoice) {
-        var result = String.format("Statement for %s\n", invoice.customer);
+    private String renderPlainText(StatementData data, Invoice invoice) {
+        var result = String.format("Statement for %s\n", data.customer());
 
         for (var perf : invoice.performances) {
             result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf)), perf.audience);
