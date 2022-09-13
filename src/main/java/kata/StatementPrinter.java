@@ -14,13 +14,14 @@ public class StatementPrinter {
 
     public String print(Invoice invoice) {
         var totalAmount = 0;
-        var volumeCredits = 0;
         var result = String.format("Statement for %s\n", invoice.customer);
 
+        var volumeCredits = 0;
         for (var perf : invoice.performances) {
-
             volumeCredits = volumeCredits + volumeCreditsFor(perf);
+        }
 
+        for (var perf : invoice.performances) {
             // print line for this order
             result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usd(amountFor(perf)), perf.audience);
             totalAmount += amountFor(perf);
