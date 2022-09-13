@@ -3,7 +3,6 @@ package kata;
 import com.github.larseckart.tcr.TestCommitRevertMainExtension;
 import org.approvaltests.Approvals;
 import org.approvaltests.core.Options;
-import org.approvaltests.reporters.AutoApproveReporter;
 import org.approvaltests.reporters.Junit5Reporter;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -37,7 +36,7 @@ class StatementPrinterTest {
                 "othello", new Play("Othello", "tragedy"));
         Invoice invoice = new Invoice("BigCo", performances);
 
-        String statement = new StatementPrinter().print(invoice, plays);
+        String statement = new StatementPrinter(plays).print(invoice);
 
         Approvals.verify(statement, new Options(new Junit5Reporter()));
     }

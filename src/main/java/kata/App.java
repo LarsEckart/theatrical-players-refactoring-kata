@@ -17,7 +17,7 @@ class App {
                 "othello", new Play("Othello", "tragedy"));
 
         Invoice bigCo = new Invoice("BigCo", performances);
-        String statement = new StatementPrinter().print(bigCo, plays);
+        String statement = new StatementPrinter(plays).print(bigCo);
         System.out.println(statement);
     }
 }

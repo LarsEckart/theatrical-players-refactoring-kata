@@ -6,7 +6,13 @@ import java.util.Map;
 
 public class StatementPrinter {
 
-    public String print(Invoice invoice, Map<String, Play> plays) {
+    private final Map<String, Play> plays;
+
+    public StatementPrinter(Map<String, Play> plays) {
+        this.plays = plays;
+    }
+
+    public String print(Invoice invoice) {
         var totalAmount = 0;
         var volumeCredits = 0;
         var result = String.format("Statement for %s\n", invoice.customer);
@@ -14,7 +20,7 @@ public class StatementPrinter {
         NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
         for (var perf : invoice.performances) {
-            var play = plays.get(perf.playID);
+            var play = this.plays.get(perf.playID);
             int thisAmount = amountFor(perf, play);
 
             // add volume credits
