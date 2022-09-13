@@ -21,10 +21,10 @@ public class StatementPrinter {
 
         for (var perf : invoice.performances) {
 
-            // add volume credits
-            volumeCredits += Math.max(perf.audience - 30, 0);
-            // add extra credit for every ten comedy attendees
-            if ("comedy".equals(playFor(perf).type)) volumeCredits += Math.floor(perf.audience / 5);
+            volumeCredits = volumeCredits + Math.max(perf.audience - 30, 0);
+            if ("comedy".equals(playFor(perf).type)) {
+                volumeCredits += Math.floor(perf.audience / 5);
+            }
 
             // print line for this order
             result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, frmt.format(amountFor(perf) / 100), perf.audience);
