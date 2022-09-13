@@ -20,7 +20,7 @@ public class StatementPrinter {
         NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
         for (var perf : invoice.performances) {
-            int thisAmount = amountFor(perf, playFor(perf));
+            int thisAmount = amountFor(perf);
 
             // add volume credits
             volumeCredits += Math.max(perf.audience - 30, 0);
@@ -40,10 +40,10 @@ public class StatementPrinter {
         return this.plays.get(perf.playID);
     }
 
-    private static int amountFor(Performance aPerformance, Play play) {
+    private int amountFor(Performance aPerformance) {
         var result = 0;
 
-        switch (play.type) {
+        switch (playFor(aPerformance).type) {
             case "tragedy":
                 result = 40000;
                 if (aPerformance.audience > 30) {
